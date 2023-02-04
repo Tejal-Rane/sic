@@ -1,0 +1,276 @@
+router 1
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#
+Router(config)#hostname R1
+R1(config)#ipv6 unicast-routing
+R1(config)#int g0/0
+R1(config-if)#no ip address
+R1(config-if)#duplex auto
+R1(config-if)#speed auto
+R1(config-if)#ipv6 address 2001:DB8:1:10::1/64
+R1(config-if)#no shut
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+R1(config-if)#ipv6 address FE80::1 link-local
+R1(config-if)#no shut
+R1(config-if)#exit
+R1(config)#do sh ipv6 int g0/0
+GigabitEthernet0/0 is up, line protocol is up
+  IPv6 is enabled, link-local address is FE80::1
+  No Virtual link-local address(es):
+  Global unicast address(es):
+    2001:DB8:1:10::1, subnet is 2001:DB8:1:10::/64
+  Joined group address(es):
+    FF02::1
+    FF02::2
+    FF02::1:FF00:1
+  MTU is 1500 bytes
+  ICMP error messages limited to one every 100 milliseconds
+  ICMP redirects are enabled
+  ICMP unreachables are sent
+  ND DAD is enabled, number of DAD attempts: 1
+  ND reachable time is 30000 milliseconds
+  ND advertised reachable time is 0 (unspecified)
+  ND advertised retransmit interval is 0 (unspecified)
+  ND router advertisements are sent every 200 seconds
+  ND router advertisements live for 1800 seconds
+  ND advertised default router preference is Medium
+  Hosts use stateless autoconfig for addresses.
+R1(config)#ipv6 rip ripng enable
+                 ^
+% Invalid input detected at '^' marker.
+	
+R1(config)#int g0/0
+R1(config-if)#ipv6 rip ripng enable
+R1(config-if)#exit
+R1(config)#int g0/1
+R1(config-if)#no ip address
+R1(config-if)#duplex auto
+R1(config-if)#speed auto
+R1(config-if)#ipv6 address 2001:DB8:1:11::1/64
+R1(config-if)#no shut
+
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+
+R1(config-if)#ipv6 address FE80::1 link-local
+R1(config-if)#ipv6 rip ripng enable
+R1(config-if)#no shut
+R1(config-if)#ipv6 rip ripng enable
+R1(config-if)#exit
+R1(config)#int s0/1/0
+R1(config-if)#no ip address
+R1(config-if)#ipv6 address 2001:DB8:1:1::1/64
+R1(config-if)#no shut
+
+%LINK-5-CHANGED: Interface Serial0/1/0, changed state to down
+R1(config-if)#ipv6 rip ripng enable
+R1(config-if)#
+%LINK-5-CHANGED: Interface Serial0/1/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1/0, changed state to up
+
+
+
+
+
+
+
+
+
+R1 con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+R1>en
+R1#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ipv6 access-list block_http
+R1(config-ipv6-acl)#deny tcp any host 2001:DB8:30:2::30 eq www
+R1(config-ipv6-acl)#deny tcp any host 2001:DB8:30:2::30 eq 443
+R1(config-ipv6-acl)#permit ipv6 any any
+R1(config-ipv6-acl)#exit
+R1(config)#int g0/0
+R1(config-if)#ipv6 traffic-filter block_http in
+R1(config-if)#
+R1#
+%SYS-5-CONFIG_I: Configured from console by console
+
+R1#
+
+
+router 2:
+Router>
+Router>hostname R2
+                ^
+% Invalid input detected at '^' marker.
+	
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R2
+R2(config)#ipv6 unicast-routing
+R2(config)#int s0/1/0
+R2(config-if)#no ip address
+R2(config-if)#ipv6 address 2001:DB6:1:1::2/64
+R2(config-if)#ipv6 address 2001:DB8:1:1::2/64
+R2(config-if)#no shut
+
+R2(config-if)#
+%LINK-5-CHANGED: Interface Serial0/1/0, changed state to up
+
+R2(config-if)#ipv6 rip 
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1/0, changed state to up
+
+% Incomplete command.
+R2(config-if)#ipv6 rip ripng enable
+R2(config-if)#exit
+R2(config)#int s0/1/1
+R2(config-if)#no ip address
+R2(config-if)#ipv6 address 2001:DB8:1:2::2/64
+R2(config-if)#no shut
+
+%LINK-5-CHANGED: Interface Serial0/1/1, changed state to down
+R2(config-if)#exit
+R2(config)#int s0/1/0
+R2(config-if)#no ip address
+R2(config-if)#ipv6  address 2001:DB8:1:1::2/64
+R2(config-if)#no shut
+R2(config-if)#
+%LINK-5-CHANGED: Interface Serial0/1/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1/1, changed state to up
+
+
+
+router 3:
+
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#ipv6 unicast-routing
+Router(config)#int g0/0
+Router(config-if)#no ip address
+Router(config-if)#duplex auto 
+Router(config-if)#speed auto
+Router(config-if)#ipv6 address 2001:DB8:30:2::1/64
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0, changed state to up
+
+Router(config-if)#ipv6 address FE80::3 link-local
+Router(config-if)#no shut
+Router(config-if)#exit
+Router(config)#do sh ipv6 int g0/0
+GigabitEthernet0/0 is up, line protocol is up
+  IPv6 is enabled, link-local address is FE80::3
+  No Virtual link-local address(es):
+  Global unicast address(es):
+    2001:DB8:30:2::1, subnet is 2001:DB8:30:2::/64
+  Joined group address(es):
+    FF02::1
+    FF02::2
+    FF02::1:FF00:1
+    FF02::1:FF00:3
+  MTU is 1500 bytes
+  ICMP error messages limited to one every 100 milliseconds
+  ICMP redirects are enabled
+  ICMP unreachables are sent
+  ND DAD is enabled, number of DAD attempts: 1
+  ND reachable time is 30000 milliseconds
+  ND advertised reachable time is 0 (unspecified)
+  ND advertised retransmit interval is 0 (unspecified)
+  ND router advertisements are sent every 200 seconds
+  ND router advertisements live for 1800 seconds
+  ND advertised default router preference is Medium
+  Hosts use stateless autoconfig for addresses.
+Router(config)#int s0/1/0
+Router(config-if)#no ip address
+Router(config-if)#ipv6 address 2001:DB8:1:2::1/64
+Router(config-if)#no shut
+
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/1/0, changed state to up
+
+Router(config-if)#ipv
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/1/0, changed state to up
+
+% Incomplete command.
+Router(config-if)#ipv6 rip ripng enable
+Router(config-if)#exit
+Router(config)#int g0/0
+Router(config-if)#ipv6 rip ripng enable
+Router(config-if)#
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#ipv6 access-list block_icmp
+Router(config-ipv6-acl)#deny icmp any any
+Router(config-ipv6-acl)#permit ipv6 any any
+Router(config-ipv6-acl)#exit
+Router(config)#int g0/0
+Router(config-if)#ipv6 traffice-filter block_icmp out
+                              ^
+% Invalid input detected at '^' marker.
+	
+Router(config-if)#ipv6 traffic-filter block_icmp out
+Router(config-if)#
+
