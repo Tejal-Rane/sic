@@ -1,0 +1,133 @@
+router 1
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface GigabitEthernet0/1
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+
+Router(config-if)#exit
+Router(config)#interface Serial0/0/0
+Router(config-if)#ip address 10.1.1.1 255.0.0.0
+Router(config-if)#ip address 10.1.1.1 255.255.255.252
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/0, changed state to up
+
+Router(config-if)#exit
+Router(config)#
+Router(config)#
+
+
+
+
+
+
+
+
+Router con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Router>ip route 10.2.2.0 255.255.255.252 10.1.1.2
+          ^
+% Invalid input detected at '^' marker.
+	
+Router>ip route 10.2.2.0 255.255.255.252 10.1.1.2
+          ^
+% Invalid input detected at '^' marker.
+	
+Router>ip route 192.168.3.0 255.255.255.0 10.1.1.2
+          ^
+% Invalid input detected at '^' marker.
+	
+Router>en
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#
+Router(config)#ip route 192.168.3.0 255.255.255.0 10.1.1.2
+Router(config)#ip route 10.2.2.0 255.255.255.252 10.1.1.2
+Router(config)#
+
+
+router 2:
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#interface Serial0/0/0
+Router(config-if)#ip address 10.1.1.2 255.0.0.0
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/0, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/0, changed state to up
+ip address 10.1.1.2 255.255.255.252
+Router(config-if)#
+Router(config-if)#exit
+Router(config)#interface Serial0/0/1
+Router(config-if)#ip address 10.2.2.2 255.255.255.252
+Router(config-if)#ip address 10.2.2.2 255.255.255.252
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/1, changed state to up
+
+
+
+
+
+
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#
+Router(config)#ip route 192.168.1.0 255.255.255.0 10.1.1.1
+Router(config)#ip route 192.168.3.0 255.255.255.0 10.2.2.1
+Router(config)#
+
+
+
+router 3;
+Router(config)#interface Serial0/0/1
+Router(config-if)#ip address 10.2.2.1 255.0.0.0
+Router(config-if)#ip address 10.2.2.1 255.255.255.252
+Router(config-if)#no shutdown
+Router(config-if)#
+%LINK-5-CHANGED: Interface Serial0/0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Serial0/0/1, changed state to up
+
+
+Router>enable
+Router#
+Router#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#(static)
+Router(config)#ip route 10.1.1.0 255.255.255.252 10.2.2.2
+Router(config)#ip route 192.168.1.0 255.255.255.0 10.2.2.2
+Router(config)#
+
